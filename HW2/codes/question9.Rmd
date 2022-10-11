@@ -1,0 +1,91 @@
+---
+title: "Question 9"
+output: html_notebook
+---
+
+Part (a)
+
+```{r}
+studentNum = c(25,30,35,20, 25)
+names(studentNum) = c("class1", "class2", "class3", "class4", "class5")
+studentNum
+```
+
+Part (b)
+
+```{r}
+barplot(studentNum, main = "student distribution", xlab="class",ylab="student number",horiz = TRUE,col.main = "darkgreen",col.lab= "red")
+
+```
+
+Part (c)
+
+```{r}
+top_student = c(3,5,2,1,4)
+# attach(top_student)
+plot(studentNum,top_student,main="Scatterplot Example",
+   xlab="all students ", ylab="top student number ", pch=8)
+```
+
+it seems that by increasing the number of students in the class, number of top students rises. However after 30 number of students, it seems that the number of top students decreases maybe because the attention of teacher for each student gets lower.
+
+```{r}
+
+```
+
+Part (e)
+
+```{r}
+gpa4 = c(19.5, 16.75, 13.5, 16.25, 5, 12.5, 15.5, 15, 11, 16.5, 12.75, 15.5, 12.75,
+9.75, 11, 14.5, 16.75, 11.5, 17, 18.25)
+boxplot(gpa4)
+quantile(gpa4)
+```
+
+First, we should calculate the IQR range and multiply it by 1.5.
+
+IQR = quantile3 - quantile2 = 16.56-12.25=4
+
+IQR \* 1.5 = 6
+
+now we calculate the range [quantile2-15.3,quantile3+15.3) which will be
+
+[12-6,16.5+6] = [6,22.5]
+
+so by checking the gpa4 vector, 5 is the only number that is not in this range, so it's the only outlier.
+
+Part (f)
+
+most students have got high gpa. so it's right skewed. there is only one outlier which is a low grade.
+
+The smooth curve is called a density curve. Density plot is continuous but the histogram is discrete and they are calculated differently. A histogram is drawn like a bar chart, but often has bars of unequal width. It is the area of the bar that tells us the frequency in a histogram, not its height. Instead of plotting frequency on the y-axis, we plot the frequency density.
+
+```{r}
+install.packages("ggplot2")
+library("ggplot2")
+ggplot() + 
+ aes(x=gpa4)+
+ geom_histogram(aes(y=..density..), colour="black", fill="white", bins=7)+
+ geom_density(alpha=.2, fill="blue")
+```
+
+Part (g)
+
+```{r}
+install.packages("lessR")
+library(lessR)
+
+cat_var <- cut(unlist(gpa4), breaks = c(-Inf,13,15,18,Inf), labels = c("D", "C","B","A"), format_fun = scales::percent)
+
+# Store the variable as data frame
+cat <- data.frame(cat_var)
+
+# Pie
+cols <-  hcl.colors(length(levels(cat_var)), "Fall")
+PieChart(cat_var, data = cat, hole = 0,
+         fill = cols,
+         labels_cex = 0.6) 
+ 
+ 
+
+```

@@ -1,0 +1,180 @@
+---
+title: "R Notebook"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  html_notebook: default
+---
+
+Part (a)
+
+```{r}
+jobs <- c("UI", "Backend", "management", "HR", "HSE");
+employ_num <- c(8,12,4,3,3);
+```
+
+Part (b)
+
+```{r}
+barplot(employ_num,xlab="employee number",ylab="jobs",main="employee distribution",names.arg = jobs,horiz = TRUE, col.main = "green", col.lab = "blue")
+```
+
+Part (c)
+
+```{r}
+UI<-c(75000,25000,48000,42000,35200,45000,23000,45500)
+backend=c(20000, 80000, 36000, 46300, 41000, 43000, 22000,37000, 39000, 43500, 69000, 5000)
+management=c(80000, 67000, 56000, 82000)
+HR=c(45000, 39000, 30000)
+HSE=c(12000, 25000, 31500)
+
+boxplot(UI,backend,management,HR,HSE)
+```
+
+Part (d)
+
+```{r}
+quantile(UI)
+quantile(backend)
+quantile(management)
+quantile(HR)
+quantile(HSE)
+```
+
+```{r}
+
+```
+
+```{r}
+iqr=IQR(UI,0.25)
+iqr
+```
+
+```{r}
+print("UI")
+iqr = IQR(UI)
+q2 = quantile(UI,0.5)
+q3 = quantile(UI,0.75)
+Tmin = q2-(1.5*iqr) 
+Tmax = q3+(1.5*iqr) 
+# find outlier
+UI[which(UI < Tmin | UI > Tmax)]
+
+print("backend")
+iqr = IQR(backend)
+q2 = quantile(backend,0.5)
+q3 = quantile(backend,0.75)
+Tmin = q2-(1.5*iqr)
+Tmax = q3+(1.5*iqr)
+# find outlier
+backend[which(backend < Tmin | backend > Tmax)]
+
+print("management")
+iqr = IQR(management)
+q3 = quantile(management,0.75)
+Tmin = q2-(1.5*iqr)
+Tmax = q3+(1.5*iqr)
+# find outlier
+management[which(management < Tmin | management > Tmax)]
+
+print("HR")
+iqr = IQR(HR)
+q2 = quantile(HR,0.5)
+q3 = quantile(HR,0.75)
+Tmin = q2-(1.5*iqr)
+Tmax = q3+(1.5*iqr)
+# find outlier
+HR[which(HR < Tmin | HR > Tmax)]
+
+print("HSE")
+iqr = IQR(HSE)
+q2 = quantile(HSE,0.5)
+q3 = quantile(HSE,0.75)
+Tmin = q2-(1.5*iqr)
+Tmax = q3+(1.5*iqr)
+# find outlier
+HSE[which(HSE < Tmin | HSE > Tmax)]
+
+```
+
+Part (e)
+
+It seems that employees in UI group have mostly low but similar salaries and only one person has high salary.
+
+employess in backend group have symmetric salaries, mostly like together with no one with too high or too low salary. but some people have lower or higher salaries.
+
+All people in management and HR groups' salaries are different but have close values.
+
+HSE employees' salaries are very different.
+
+```{r}
+library("ggplot2")
+
+
+ggplot() + 
+ aes(x=UI)+
+ geom_histogram(aes(y=..density..), colour="black", fill="white", bins=5)+
+ geom_density(alpha=.2, fill="blue") 
+
+
+ggplot() + 
+ aes(x=backend)+
+ geom_histogram(aes(y=..density..), colour="black", fill="white", bins=5)+
+ geom_density(alpha=.2, fill="blue")
+
+
+
+ggplot() + 
+ aes(x=management)+
+ geom_histogram(aes(y=..density..), colour="black", fill="white", bins=4)+
+ geom_density(alpha=.2, fill="blue")
+
+
+ggplot() + 
+ aes(x=HR)+
+ geom_histogram(aes(y=..density..), colour="black", fill="white", bins=3)+
+ geom_density(alpha=.2, fill="blue")
+
+
+ggplot() + 
+ aes(x=HSE)+
+ geom_histogram(aes(y=..density..), colour="black", fill="white", bins=3)+
+ geom_density(alpha=.2, fill="blue")
+
+```
+
+Part (f)
+
+```{r}
+# install.packages("lessR")
+library(lessR)
+
+cat_var <- cut(c(UI,backend,management,HR,HSE), breaks = c(-Inf,20000,30000,40000,50000,Inf), labels = c("very low", "low","middle","high","very high"), format_fun = scales::percent)
+
+# Store the variable as data frame
+cat <- data.frame(cat_var)
+
+# Pie
+cols <-  hcl.colors(length(levels(cat_var)), "Fall")
+PieChart(cat_var, data = cat, hole = 0,
+         fill = cols,
+         labels_cex = 0.6) 
+ 
+```
+
+Part (g)
+
+```{r}
+# Create the function.
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+mean(backend)
+median(backend)
+getmode(backend)
+var(backend)
+sd(backend)
+```
