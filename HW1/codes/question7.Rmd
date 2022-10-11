@@ -1,0 +1,66 @@
+---
+title: "HW1-question 7"
+output: html_notebook
+---
+
+```{r}
+top_student = c(3,5,2,1,4)
+# attach(top_student)
+plot(studentNum,top_student,main="Scatterplot Example",
+   xlab="all students ", ylab="top student number ", pch=8)
+```
+
+part (b)
+
+```{r}
+# install.packages("corrplot")
+# load()
+library(corrplot)
+caar <- cor(mtcars[1:6])
+corrplot(caar, method = "number")
+```
+
+part (c)
+
+```{r}
+library(lessR)
+dishType <- read.table("Foods.csv", header = TRUE, sep = ",",
+                           colClasses = c("NULL", "NULL", "NULL",
+                                          "NULL", "NULL","NULL", "character"))
+
+# dishType=unlist(dishType)
+
+dishType <- table(dishType)
+cols <-  hcl.colors(length(levels(dishType)), "Fall")
+PieChart(dishType, data = cat, hole = 0,
+         fill = cols,
+         labels_cex = 0.6) 
+ 
+```
+
+part (d)
+
+```{r}
+dishType <- read.table("Foods.csv", header = TRUE, sep = ",",
+                           colClasses = c("NULL", "NULL", "NULL",
+                                          "NULL", "NULL","NULL", "character"))
+
+dishType=unlist(dishType)
+healthScore <- read.table("Foods.csv", header = TRUE, sep = ",",
+                           colClasses = c("NULL", "NULL", "numeric",
+                                          "NULL", "NULL","NULL", "NULL"))
+
+healthScore=unlist(healthScore)
+
+library(ggplot2)
+# Basic violin plot
+p <- ggplot(healthScore, aes(x=dishType, y=healthScore)) + 
+  geom_violin()
+p
+# Rotate the violin plot
+p + coord_flip()
+# Set trim argument to FALSE
+# ggplot(ToothGrowth, aes(x=dose, y=len)) + 
+#   geom_violin(trim=FALSE)
+
+```

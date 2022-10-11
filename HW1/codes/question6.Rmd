@@ -1,0 +1,122 @@
+---
+title: "HW1 question 6"
+output: html_notebook
+---
+
+part (a)
+
+This plot shows that most prices are lower than 10 and there are a few items that have high prices.
+
+density plot is a representation of the distribution of a numeric variable. It is a smoothed version of the histogram and is used in the same kind of situation. A histogram plot is an alternative to Density plot for visualizing the distribution of a continuous variable. This chart represents the distribution of a continuous variable by dividing into bins and counting the number of observations in each bin.
+
+```{r}
+# install.packages("ggplot2", dependencies = TRUE)
+# Load ggplot2
+library("ggplot2")
+# 
+# Foods <- read.csv(file = 'Foods.csv')
+# pricePerServing = int(Foods$pricePerServing)
+
+
+pricePerServing <- read.table("Foods.csv", header = TRUE, sep = ",",
+                           colClasses = c("NULL", "numeric", "NULL",
+                                          "NULL", "NULL","NULL", "NULL"))
+
+pricePerServing=unlist(pricePerServing)
+k <- ceiling(1 + 3.322*log10(length(pricePerServing)))
+ggplot() +
+ aes(x=pricePerServing)+
+ geom_histogram(aes(y=..density..), colour="black", fill="white", bins=k)+
+ geom_density(alpha=.2, fill="#FF6666")
+```
+
+part (b)
+
+stat_count() counts the number of cases at each x position.
+
+```{r}
+dishType <- read.table("Foods.csv", header = TRUE, sep = ",",
+                           colClasses = c("NULL", "NULL", "NULL",
+                                          "NULL", "NULL","NULL", "character"))
+
+dishType=unlist(dishType)
+# sort(dishType,decreasing = TRUE)
+
+ggplot() +
+ aes(x=dishType)+
+ stat_count(aes(x = reorder(Pclass,(-count)), y = count),colour="black", fill="white")+ ggplot2::coord_flip()
+ 
+```
+
+part (c)
+
+The boxplot compactly displays the distribution of a continuous variable. It visualises five summary statistics (the median, two hinges and two whiskers), and all "outlying" points individually.
+
+```{r}
+dishType <- read.table("Foods.csv", header = TRUE, sep = ",",
+                           colClasses = c("NULL", "NULL", "NULL",
+                                          "NULL", "NULL","NULL", "character"))
+
+dishType=unlist(dishType)
+healthScore <- read.table("Foods.csv", header = TRUE, sep = ",",
+                           colClasses = c("NULL", "NULL", "numeric",
+                                          "NULL", "NULL","NULL", "NULL"))
+
+healthScore=unlist(healthScore)
+ggplot() +
+ aes(x=dishType,y=healthScore)+
+  geom_boxplot(outlier.colour="black", outlier.shape=16,
+             outlier.size=2, notch=FALSE)
+
+
+```
+
+Part (d)
+
+Mosaic plot is a special type of stacked bar chart. For two variables, the width of the columns is proportional to the number of observations in each level of the variable plotted on the horizontal axis.
+
+```{r}
+# install.packages("ggmosaic")
+# load("ggmosaic")
+library("ggmosaic")
+
+veryHealthy <- read.table("Foods.csv", header = TRUE, sep = ",",
+                           colClasses = c("NULL", "NULL", "NULL",
+                                          "NULL", "character","NULL", "NULL"))
+
+veryHealthy=unlist(veryHealthy)
+dairyFree <- read.table("Foods.csv", header = TRUE, sep = ",",
+                           colClasses = c("NULL", "NULL", "NULL",
+                                          "NULL", "NULL","character", "NULL"))
+
+dairyFree=unlist(dairyFree)
+
+# ggplot() +
+#  aes(dishType,healthScore)+
+#   geom_mosaic() 
+
+ggplot() +
+  geom_mosaic(aes(x = product(veryHealthy), fill=dairyFree)) +
+  theme_mosaic()
+   
+```
+
+part (e)
+
+```{r}
+
+readyInMinutes <- read.table("Foods.csv", header = TRUE, sep = ",",
+                           colClasses = c("NULL", "NULL", "NULL",
+                                          "numeric", "NULL","NULL", "NULL"))
+
+readyInMinutes=unlist(readyInMinutes)
+healthScore <- read.table("Foods.csv", header = TRUE, sep = ",",
+                           colClasses = c("NULL", "NULL", "numeric",
+                                          "NULL", "NULL","NULL", "NULL"))
+
+healthScore=unlist(healthScore)
+
+data <- rbind(readyInMinutes,healthScore)
+ggplot(data, aes(x=readyInMinutes, y=healthScore) ) +
+  geom_point()
+```

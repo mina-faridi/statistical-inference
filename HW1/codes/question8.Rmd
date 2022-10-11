@@ -1,0 +1,35 @@
+---
+title: "HW1-question8"
+output: html_notebook
+---
+
+part (a)
+
+```{r}
+x1 = rexp(50, rate = 1)
+x2 = rnorm(50, mean=0, sd=1)
+x3 = rcauchy(50, location = 0, scale = 0.5)
+x4 = runif(50, min = 0, max = 1)
+  
+x = seq(1, 50, length.out=50)
+p1<-qplot(x, x1)
+p2<-qplot(x, x2)
+p3<-qplot(x, x3)
+p4<-qplot(x, x4)
+
+p1
+p2
+p3
+p4
+
+```
+
+part (b)
+
+A straight, diagonal line means that you have normally distributed data. If the line is skewed to the left or right, it means that we do not have normally distributed data.
+
+part (c)
+
+```{r}
+
+```
