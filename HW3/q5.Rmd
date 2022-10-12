@@ -1,0 +1,57 @@
+---
+title: "HW3 q5"
+output: html_notebook
+---
+
+a)
+The Mann-Whitney U Test is a statistical test used to determine if 2 groups are significantly different from each other on your variable of interest. The variable of interest should be continuous and 2 groups should have similar values on variable of interest. 2 groups should be independent (not related to each other) and you should have enough data (more than 5 values in each group, though it also depends on how big the difference is between groups).
+
+![](images/paste-2EDE585B.png){width="252"}
+
+b)
+
+if we sort the values and get the mean of reppetitous values:
+
+ce_iq_rank = 9, 13.5, 11, 11, 7, 15, 13.5, 11, 5, 8, 104
+
+ee_iq_rank = 17, 16, 4, 1, 20, 19, 6, 3, 2, 18, 106
+
+c)
+
+U_ce_iq = 10\*10+10\*5.5-104 = 51
+
+U_ee_iq = 10\*10+10\*0.5-106 = 49
+
+U = min(U_ce_iq , U_ee_iq ) = 49
+
+by checking the chart for n1 and n2 = 10 we find the value 23 for U_critical.
+
+which U_state is greater than U_critical so we can't reject null hypothesis.
+
+The groups are similar.
+
+by p-value:
+
+Mean = 10\*10 / 2=50
+
+std_err = ((100 + 21)/12)\^2=3.17
+
+z = (U - Mean)/std_err = -0.314
+
+-\> p-value -\> 0.7535
+
+So null hypothesis can't be rejected.
+
+d)
+
+p-value is:
+
+```{r}
+2*pnorm(q=-0.314)
+```
+
+d)
+
+The p-value is a number, calculated from a statistical test, that describes how likely we are to have found a particular set of observations if the null hypothesis were true.
+
+P-values are used in hypothesis testing to help decide whether to reject the null hypothesis. The smaller the p-value, the more likely we are to reject the null hypothesis.

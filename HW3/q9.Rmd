@@ -1,0 +1,66 @@
+---
+title: "HW3 question 9"
+output: html_notebook
+---
+
+part (a)
+
+```{r}
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+#library(magrittr) # needs to be run every time you start R and want to use %>%
+#library(dplyr)    # alternatively, this also loads %>%
+
+
+library("data.table")
+
+conf_Pressure <- fread("alldecisiondata_withrt_long.csv", header = TRUE, sep = ",",select = c("Pressure", "conf"))
+
+#conf_Pressure
+
+pressure = conf_Pressure[conf_Pressure$Pressure == "Pressure", ]
+#pressure = unlist(pressure)
+
+control = conf_Pressure[conf_Pressure$Pressure == "Control", ]
+#control
+#control = unlist(control)
+#control = c(1,2,3,4,5,6,7,8,2,3,4,5,6,7,8,2,3,4,5,6,7,8)
+#pressure = c(1,2,3,4,5,6,7,8,2,3,4,5,6,7,8,2,3,4,5,6,7,8)
+a = t.test(control[[2]], pressure[[2]])
+a
+#barplot(a)
+```
+
+part (b)
+
+```{r}
+library("data.table")
+
+conf_uncertainity <- fread("alldecisiondata_withrt_long.csv", header = TRUE, sep = ",",select = c("uncertainty", "conf"))
+
+#conf_uncertainity
+ou = conf_uncertainity[conf_uncertainity$uncertainty == "OU", ]
+
+mu = conf_uncertainity[conf_uncertainity$uncertainty == "MU", ]
+#mu
+
+a = t.test(ou[[2]], mu[[2]])
+a
+```
+
+part (c)
+
+```{r}
+
+library("data.table")
+
+puk <- fread("alldecisiondata_withrt_long.csv", header = TRUE, sep = ",",select = c("Pressure","uncertainty", "correct"))
+
+#puk
+op = conf_uncertainity[puk$uncertainty == "OU" & puk$Pressure == "Pressure", ]
+oc = conf_uncertainity[puk$uncertainty == "OU" & puk$Pressure == "Control", ]
+#mu
+op
+a = t.test(op[[2]], oc[[2]])
+a
+```

@@ -1,0 +1,28 @@
+---
+title: "HW3 q3"
+output: html_notebook
+---
+
+a) chi_sqr = ((38-50)\^2)/50+((64 - 50)\^2)/50=6.8
+
+```{r}
+p_value = pchisq(6.8, 1, lower.tail = FALSE)
+```
+
+If a \> 0.0091 the null hypothesis is rejected
+
+b) A binomial distribution can be thought of as simply the probability of a SUCCESS or FAILURE outcome in an experiment or survey that is repeated multiple times. The mean is p and standard deviation is (p(1-p)/n)\^2. when p=0.5 or for large n it is symmetrical.
+
+c) X\^2 = 6.8
+
+6.63\<6.68
+
+p-value\<q.99
+
+p-value\<0.01
+
+d)
+
+![](images/paste-87735921.png){width="258"}
+
+answer is always \>0 and has a factor (x-n/2)\^2.
