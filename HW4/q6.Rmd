@@ -1,0 +1,51 @@
+---
+title: "Hw4 q6"
+output: html_notebook
+---
+
+a)  Skewness is a measure of symmetry, or more precisely, the lack of symmetry. A distribution, or data set, is symmetric if it looks the same to the left and right of the center point. Kurtosis is a measure of whether the data are heavy-tailed or light-tailed relative to a normal distribution.
+
+first we prepare the data.
+
+```{r}
+#install.packages("moments")
+library(moments)
+```
+
+```{r}
+x<-c(1:20)
+y<-c(15,1,17,28,9,9,40,6,22,33,13,14,25,26,57,17,18,19,40,21)
+
+```
+
+```{r}
+skewness(y)
+kurtosis(y)
+hist(y)
+```
+
+b)  
+
+```{r}
+pgamma(1:10,shape=2,1)
+```
+
+c)  
+
+```{r}
+glm(y~x)
+summary(lm(y~x))
+loglink <- glm(y ~ x, family = Gamma(link = "log"));summary(loglink)
+idenlink <- glm(y ~ x, family = Gamma(link = "identity"));summary(idenlink)
+```
+
+d)  
+
+```{r}
+Mo<-lm(y~x)
+r<-Mo$residuals
+fitted<-Mo$fitted.values
+plot(fitted~r)
+skewness(r)
+skewness(fitted)
+```

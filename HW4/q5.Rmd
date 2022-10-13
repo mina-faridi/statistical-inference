@@ -1,0 +1,69 @@
+---
+title: "HW4 q6"
+output: html_notebook
+---
+
+c)  
+
+```{r}
+#install.packages("readxl")
+#install.packages("MASS")
+#install.packages("rgr")
+#install.packages("fastICA")
+#install.packages("lme4")
+#install.packages("ggplot2")
+#install.packages("ggpubr")
+
+library(ggplot2)
+library(ggpubr)
+library(lme4)
+library(readxl)
+library(MASS)
+library(rgr)
+
+```
+
+```{r}
+D<-read.csv("NBA_stats.csv")
+#D<-as.matrix(D)
+D<-data.frame(D)
+###############
+attach(D)
+head(D)
+```
+
+```{r}
+D1<-D[-c(D[,3]=="PG"),]
+```
+
+d)  
+
+```{r}
+plot(FGA,FG.)
+```
+
+e)  
+
+```{r}
+fit<-lm(FG.~FGA)
+summary(fit)
+e=fit$resid
+library(rgr)
+cnpplt(e,pch=18,xlab="Residuals")
+```
+
+f)  
+
+```{r}
+boxplot(D$FG. ~ D$Pos, col="orange", 
+        main="Boxplots", 
+        ylab="FGP", xlab="position")
+```
+
+g)  
+
+```{r}
+D2<-D[,c(11,10,3)]
+str(D2)
+fm1 <- lmer(FG. ~ FGA + (FGA | Pos), D2)
+```
