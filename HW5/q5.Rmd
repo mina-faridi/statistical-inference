@@ -1,0 +1,27 @@
+---
+title: "HW5  q5"
+output: html_notebook
+---
+
+```{r}
+mh_sampler <- function(dens, start = 0, nreps = 1000, prop_sd = 1, ...){
+  theta <- numeric(nreps)
+  theta[1] <- start
+  
+  for (i in 2:nreps){
+    theta_star <- rnorm(1, mean = theta[i - 1], sd = prop_sd)
+    alpha = dens(theta_star, ...) / dens(theta[i - 1], ...)
+    
+    if (runif(1) < alpha) theta[i] <- theta_star
+    else theta[i] <- theta[i - 1]
+  }
+  
+  return(theta)
+}
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
